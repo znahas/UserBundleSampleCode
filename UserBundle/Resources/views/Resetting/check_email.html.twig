@@ -1,0 +1,9 @@
+{% extends '::layout.html.twig' %}
+
+{% block fos_user_content %}
+    <div class="alert alert-success">
+        {#{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}#}
+        {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime}, 'FOSUserBundle')|nl2br }}
+    </div>
+    <a href="{{ url('fos_user_security_login') }}" class="btn btn-default btn-primary">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</a>
+{% endblock %}

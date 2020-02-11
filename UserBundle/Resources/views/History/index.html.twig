@@ -1,0 +1,32 @@
+{% extends '::layout.html.twig' %}
+
+{% block breadcrumb %}
+    <li>Tools</li>
+    <li class="active">Login History</li>
+{% endblock %}
+
+{% block content %}
+
+    <table id="mytable" class="tablesorter table table-bordered table-hover table-condensed">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date{$time_zone}</th>
+            <th>Access Level</th>
+            <th>IP</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.fname }} {{ user.lname }}</td>
+                <td>{% if user.lastLogin  != null %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ user.roles|join(", ") }}</td>{# use translation #}
+                <td>{% if ip[user.id] is defined %}{{ ip[user.id] }}{% endif %}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

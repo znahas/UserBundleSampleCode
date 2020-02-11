@@ -1,0 +1,36 @@
+{% block subject %}Blue Beetle account has been activated{% endblock %}
+
+{% block body_text %}
+    {% autoescape false %}
+
+        Dear {{ user.getFullname() }},
+
+        We are pleased to inform you that your account has been activated and you can find your account details below:
+
+        {% if user.clan.id is defined %}Account#: {{ user.clan.id }}{% endif %}
+        Username: {{ user.username }}
+
+        You will receive a second email from us asking you to reset your password to begin using our online reporting system.
+
+        Yours Truly,
+        Blue Beetle Customer Support
+
+    {% endautoescape %}
+{% endblock %}
+
+{% block body_html %}
+
+    <p>Dear {{ user.getFullname() }}, </p>
+
+    <p>We are pleased to inform you that your
+        account has been activated and you can find your account details below: </p>
+
+    {% if user.clan.id is defined %}<p>Account#: {{ user.clan.id }}{% endif %}
+    <br /> Username: {{ user.username }}</p>
+
+    <p>You will receive a second email from us asking you to reset your password to begin using our online reporting
+        system. </p>
+
+
+    <p>Yours Truly,<br /> Blue Beetle Customer Support</p>
+{% endblock %}

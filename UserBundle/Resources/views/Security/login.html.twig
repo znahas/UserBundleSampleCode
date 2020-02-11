@@ -1,0 +1,141 @@
+{% extends '::layout.html.twig' %}
+
+{% block fos_user_content %}
+    <div class="col-md-4 col-sm-8" style="margin-top: 20px">
+        <div class="signin">
+
+            <form role="form" action="{{ path("fos_user_security_check") }}" method="post" data-validate="form" id="signin-form">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+                <div class="form-group">
+                    <div class="input-group input-group-in">
+                        <span class="input-group-addon text-muted">@</span>
+                        <input type="text" class="form-control" name="_username" required="" minlength="4" placeholder="username" autocomplete="off">
+                    </div>
+                    <!--/input-group-->
+                </div>
+                <!--/form-group-->
+
+                <div class="form-group">
+                    <div class="input-group input-group-in">
+                        <span class="input-group-addon text-muted"><i class="fa fa-circle-o"></i></span>
+                        <input type="password" class="form-control" name="_password" required="" minlength="4" placeholder="Password">
+                    </div>
+                    <!--/input-group-->
+                </div>
+                <!--/form-group-->
+
+                <div class="form-group">
+                    <div class="nice-checkbox">
+                        <input class="checkbox-o" type="checkbox" name="_remember_me" id="keep-signin">
+                        <label for="keep-signin">Keep me sign in</label>
+                    </div>
+                </div>
+                <!--/form-group-->
+
+                <div class="form-group form-actions">
+                    <input type="submit" class="hidden-sm btn btn-primary" value="Sign In">
+                    <input type="submit" class="visible-sm btn btn-lg btn-block btn-primary" value="Sign In">
+                </div>
+                <!--/form-group-->
+
+                <p>
+                    <small>
+                        <a href="#modalRecover" data-toggle="modal">Can't Access your Account?</a>
+                    </small>
+                </p>
+                <p class="hidden-sm">
+                    <a href="#" rel="tooltip" title="Signin with Twitter account" class="btn btn-sm btn-info">
+                        <span class="fa fa-twitter"></span></a>
+                    <a href="#" rel="tooltip" title="Signin with Google account" class="btn btn-sm btn-danger">
+                        <span class="fa fa-google-plus"></span></a>
+                    <a href="#" rel="tooltip" title="Signin with Github account" class="btn btn-sm btn-cloud">
+                        <span class="fa fa-github"></span></a>
+                </p>
+
+            </form>
+            <!--/#signin-form-->
+        </div>
+        <!--/signin-->
+
+        <!-- modalRecover -->
+        <div class="modal fade" id="modalRecover" tabindex="-1" role="dialog" aria-labelledby="modalRecoverLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    {#<form action="{{ path('fos_user_resetting_request') }}" method="POST" data-validate="form" role="form" id="recover-form">#}
+                    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" data-validate="form" role="form" id="recover-form">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="modalRecoverLabel">Reset Password</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <div class="input-group input-group-in">
+                                    <span class="input-group-addon text-muted">@</span>
+                                    {#<input type="email" class="form-control" name="recover" required="" autocomplete="off">#}
+                                    {#<label for="username" class="required">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>#}
+                                    <input type="text" id="username" name="username" required="required" class="form-control" />
+
+                                </div>
+
+                                <!--/input-group-->
+                            </div>
+                            <!--/form-group-->
+                            <p class="text-muted">
+                                <small>Enter your username {#or email address #}and we will send you a link to reset your
+                                    password.
+                                </small>
+                            </p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Send reset link</button>
+                        </div>
+                    </form>
+
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+    </div><!--/cols-->
+{% endblock %}
+{#
+
+{% block fos_user_content %}
+    {% if error %}
+        <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+    {% endif %}
+
+    <div class="col-sm-4 col-md-3">
+        <form role="form" action="{{ path("fos_user_security_check") }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+            <div class="form-group">
+                <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+                <input type="password" id="password" name="_password" required="required" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="remember_me" class="checkbox">
+                    <input type="checkbox" id="remember_me" name="_remember_me"
+                           value="on" />{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+                </label>
+            </div>
+
+            <input type="submit" id="_submit" name="_submit"
+                   value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-default btn-primary" />
+
+            <a href="{{ path('fos_user_resetting_request') }}">Forgot password ?</a>
+        </form>
+    </div>
+{% endblock fos_user_content %}
+#}

@@ -1,0 +1,126 @@
+{% extends '::layout.html.twig' %}
+
+{% block breadcrumb %}
+    <li>Setup</li>
+    <li class="active">Staff Personnel</li>
+{% endblock %}
+
+{% block content_body %}
+    <a href="{{ url('application_user_admin_new') }}" class="btn btn-default btn-primary">New User</a>
+
+    <div class="users">
+        <ul class="nav nav-tabs">
+            <li {% if show == 'all' %}class="active"{% endif %}>
+                <a href="?show=all">
+                    All<span class="badge">{% if badges.all is defined %}{{ badges.all }}{% endif %}</span>
+                </a>
+            </li>
+            <li {% if show == 'admin' %}class="active"{% endif %}>
+                <a href="?show=admin">
+                    Admin<span class="badge">{% if badges.ROLE_ADMIN is defined %}{{ badges.ROLE_ADMIN }}{% endif %}</span>
+                </a>
+            </li>
+            <li {% if show == 'tracked' %}class="active"{% endif %}>
+                <a href="?show=tracked">
+                    Tracked<span class="badge">{% if badges.tracked is defined %}{{ badges.tracked }}{% endif %}</span>
+                </a>
+            </li>
+            <li {% if show == 'inclan' %}class="active"{% endif %}>
+                <a href="?show=inclan">
+                    In Clan<span class="badge">{% if badges.inclan is defined %}{{ badges.inclan }}{% endif %}</span>
+                </a>
+            </li>
+            <li {% if show == 'noclan' %}class="active"{% endif %}>
+                <a href="?show=noclan">
+                    No Clan<span class="badge">{% if badges.noclan is defined %}{{ badges.noclan }}{% endif %}</span>
+                </a>
+            </li>
+            <li {% if show == 'clan' %}class="active"{% endif %}>
+                <a href="?show=clan">
+                    Clan/Clan
+                    Admin<span class="badge">{% if badges.ROLE_CLAN is defined %}{{ badges.ROLE_CLAN }}{% endif %}</span>
+                </a>
+            </li>
+        </ul>
+
+
+        <table id="users" class="datatable_fixed_column table table-striped table-bordered table-condensed">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Enabled</th>
+                <th>Tracked</th>
+                <th>Import</th>
+                <th>Last login</th>
+                <th>IP</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.fullname }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.emailCanonical }}</td>
+                    <td>
+                        <ul>
+                            {% for role in user.roles %}
+                                <li>{{ role|trans }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        {% if user.enabled %}{{ 'common.yes'|trans }}{% else %}{{ 'common.no'|trans }}{% endif %}
+                    </td>
+
+                    <td>
+                        {% if user.isTracked %}{{ 'common.yes'|trans }}{% else %}{{ 'common.no'|trans }}{% endif %}
+                    </td>
+                    <td>
+                        {% if user.lastImported %}
+                            <div title="{{ user.lastImported|date('Y-m-d H:i:s') }}">
+                                {{ user.lastImported|date('Y-m-d') }}
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if user.lastLogin %}
+                            <div title="{{ user.lastLogin|date('Y-m-d H:i:s') }}">
+                                {{ user.lastLogin|date('Y-m-d') }}
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td></td>
+                    <td>
+                        <div title="{{ user.createdAt|date('Y-m-d H:i:s') }}">
+                            {{ user.createdAt|date('Y-m-d') }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group-vertical">
+                            <a href="{{ url('application_user_admin_edit', {'user': user.id}) }}" class="btn btn-default">
+                                Edit
+                            </a>
+                            <a href="{{ url('application_user_resetadmin_resetpassword', {'username': user.username}) }}" class="btn btn-default">
+                                Reset password
+                            </a>
+                            <a href="{{ url('application_clan_member_import', {'tag': user.tag}) }}" class="btn btn-default">
+                                Import PLayer Info
+                            </a>
+                            <a href="{{ url('application_clan_clan_userimportbattles', {'id': user.id}) }}" class="btn btn-default">
+                                Import btls
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+
+{% endblock %}

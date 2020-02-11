@@ -1,0 +1,19 @@
+{% extends '::layout.html.twig' %}
+
+{% block breadcrumb %}
+    <li>Settings</li>
+    <li>
+        <a href="{{ url('application_user_admin_index') }}">Staff Personnel</a>
+    </li>
+    <li class="active">Edit</li>
+{% endblock %}
+{% block content %}
+
+    <div class="col-md-2">
+        <form method="post">
+            {{ form_widget(form) }}
+
+            <input type="submit" class="btn btn-default btn-primary" value="Save" />
+        </form>
+    </div>
+{% endblock %}

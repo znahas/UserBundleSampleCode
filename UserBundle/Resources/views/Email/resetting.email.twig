@@ -1,0 +1,27 @@
+{% block subject %}Blue Beetle Reporting reset password{% endblock %}
+
+{% block body_text %}
+    {% autoescape false %}
+
+        Dear {{ user.getFullname() }},
+
+        Your account has been activated. Please visit {{ confirmationUrl }} to reset your password and start using our online reporting system.
+
+        Regards,
+        Blue Beetle Customer Support
+    {% endautoescape %}
+{% endblock %}
+
+{% block body_html %}
+
+    <p>Dear {{ user.getFullname() }}, </p>
+
+
+    <p>Your account has been activated. Please visit
+        <a href="{{ confirmationUrl }}">{{ confirmationUrl }}</a>
+        to reset your password and start using our online reporting system.
+    </p>
+
+    <p>Yours Truly,<br /> Blue Beetle Customer Support</p>
+
+{% endblock %}
